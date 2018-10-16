@@ -6,5 +6,6 @@ namespace ex.vm
         Stack,
         Heap,
         Global,
+        Instruction,
     }
 }

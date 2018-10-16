@@ -6,6 +6,8 @@ namespace ex.vm
     public interface SInstruction
     {
     }
+    // TODO Load Effetive Address
+    // TODO consider the memory regions and refactor the instructions
 
     public class AddRegisters : SInstruction
     {
@@ -175,7 +177,7 @@ namespace ex.vm
         public Register Source;
     }
 
-    public class JumpOnGreaterTan : SInstruction
+    public class JumpOnGreaterThan : SInstruction
     {
         public UInt64 Label;
         public Register Source;

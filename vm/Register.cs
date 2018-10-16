@@ -5,6 +5,7 @@ namespace ex.vm
     {
         BasePointer,
         StackPointer,
+        InstructionPointer,
         R1, 
         R2, 
         R3, 
