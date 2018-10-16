@@ -14,6 +14,130 @@ namespace ex.vm
         public Register Destination;
     }
 
+    public class AddValueToRegister : SInstruction
+    {
+        public Register Source;
+        public UInt64 Value;
+        public Register Destination;
+    }
+
+    public class SubtractRegister : SInstruction
+    {
+        public Register Source1;
+        public Register Source2;
+        public Register Destination;
+    }
+
+    public class SubtractValueFromRegister : SInstruction
+    {
+        public Register Source;
+        public UInt64 Value;
+        public Register Destination;
+    }
+
+    public class MultiplyRegisters : SInstruction
+    {
+        public Register Source1;
+        public Register Source2;
+        public Register Destination;
+    }
+
+    public class MultiplyValueWithRegister : SInstruction
+    {
+        public Register Source;
+        public UInt64 Value;
+        public Register Destination;
+    }
+
+    public class DivideRegisters : SInstruction
+    {
+        public Register Dividend;
+        public Register Divisor;
+        public Register Destination;
+    }
+
+    public class RightShiftRegisterByRegister : SInstruction
+    {
+        public Register Target;
+        public Register Amount;
+        public Register Destination;
+    }
+
+    public class RightShiftRegisterByValue : SInstruction
+    {
+        public Register Target;
+        public byte Amount;
+        public Register Destination;
+    }
+
+    public class LeftShiftRegisterByRegister : SInstruction
+    {
+        public Register Target;
+        public Register Amount;
+        public Register Destination;
+    }
+
+    public class LeftShiftRegisterByValue : SInstruction
+    {
+        public Register Target;
+        public byte Amount;
+        public Register Destination;
+    }
+
+    public class BinaryAndRegisters : SInstruction
+    {
+        public Register Source1;
+        public Register Source2;
+        public Register Destination;
+    }
+
+    public class BinaryAndRegisterWithValue : SInstruction
+    {
+        public Register Source1;
+        public UInt64 Value;
+        public Register Destination;
+    }
+
+    public class BinaryOrRegisters : SInstruction
+    {
+        public Register Source1;
+        public Register Source2;
+        public Register Destination;
+    }
+
+    public class BinaryOrRegisterWithValue : SInstruction
+    {
+        public Register Source1;
+        public UInt64 Value;
+        public Register Destination;
+    }
+
+    public class BinaryXorRegisters : SInstruction
+    {
+        public Register Source1;
+        public Register Source2;
+        public Register Destination;
+    }
+
+    public class BinaryXorRegisterWithValue : SInstruction
+    {
+        public Register Source1;
+        public UInt64 Value;
+        public Register Destination;
+    }
+
+    public class NegateRegister : SInstruction
+    {
+        public Register Source;
+        public Register Destination;
+    }
+
+    public class ComplementRegister : SInstruction
+    {
+        public Register Source;
+        public Register Destination;
+    }
+
     public class CompareRegisters : SInstruction
     {
         public Register Source1;
@@ -61,24 +185,28 @@ namespace ex.vm
     {
         public Register Source;
         public Register Destination;
+        public UInt64 Mask;
     }
 
     public class MoveValueToRegister : SInstruction
     {
         public UInt64 Value;
         public Register Destination;
+        public UInt64 Mask;
     }
 
     public class MoveRegisterToAddress : SInstruction
     {
         public Address Address;
         public Register Source;
+        public UInt64 Mask;
     }
 
     public class MoveAddressToRegister : SInstruction
     {
         public Address Address;
         public Register Destination;
+        public UInt64 Mask;
     }
 
     public class Push : SInstruction

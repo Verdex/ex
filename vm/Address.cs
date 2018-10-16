@@ -7,5 +7,6 @@ namespace ex.vm
     {
         public Int64 Offset;
         public Register Source;
+        public MemoryRegion Region;
     }
 }
