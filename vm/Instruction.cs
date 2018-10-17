@@ -187,28 +187,24 @@ namespace ex.vm
     {
         public Register Source;
         public Register Destination;
-        public UInt64 Mask;
     }
 
     public class MoveValueToRegister : SInstruction
     {
         public UInt64 Value;
         public Register Destination;
-        public UInt64 Mask;
     }
 
     public class MoveRegisterToAddress : SInstruction
     {
         public Address Address;
         public Register Source;
-        public UInt64 Mask;
     }
 
     public class MoveAddressToRegister : SInstruction
     {
         public Address Address;
         public Register Destination;
-        public UInt64 Mask;
     }
 
     public class Push : SInstruction
