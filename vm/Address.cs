@@ -11,10 +11,11 @@ namespace ex.vm
         Instruction,
     }
 
-    public class Address
+    public struct Address
     {
-        public Int64 Offset;
-        public Register Source;
-        public MemoryRegion Region;
+        public MemoryRegion Region; 
+        public int Index;
+        public PType PrimitiveType;
+        public int Offset;
     }
 }
