@@ -1,0 +1,17 @@
+local function
+env, sig, env passing
+struct
+union
+generics, constraint
+linq functions
+rewrite on immutable
+pattern match
+lambda
+do notion, applicative, alt
+compose, curry, |>, J
+parse on list<T>
+panic
+lglobals
+extension methods
+mut and immut
+
