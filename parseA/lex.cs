@@ -8,15 +8,15 @@ namespace ex.parseA
         private int _index;
         private string _text;
 
-        public IEnumerable<L> Lex(string input)
+        public IEnumerable<Token> Lex(string input)
         {
             _index = 0;
             _text = input;
             return null;
         }
-
-        
     
+         
+
         private char Previous => _text[_index - 1];
         private char Next => _text[_index + 1];
         private char Curent => _text[_index];
