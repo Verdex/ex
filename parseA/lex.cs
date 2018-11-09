@@ -21,6 +21,14 @@ namespace ex.parseA
                 {
                     // Nop
                 }
+                else if ( Try( "//" ) )
+                {
+                    ClearLine();
+                }
+                else if ( Try( "/*" ) )
+                {
+                    ClearBlockComment();
+                }
                 else if ( TryKeyword( "func" ) )
                 {
                     yield return new Function();
@@ -101,6 +109,31 @@ namespace ex.parseA
 
             symbol = new string( s.ToArray() );
             return true;
+        }
+        
+        private void ClearLine()
+        {
+            while( !EndText && Current != '\n' && Current != '\r' )
+            {
+                _index++;
+            }
+            if ( !EndText && (Current == '\n' || Current == '\r') )
+            {
+                _index++;
+            }
+        }
+
+        private void ClearBlockComment()
+        {
+            bool EndComment() => Current == '*' && HasNext && Next == '/';
+            while( !EndText && !EndComment() )
+            {
+                _index++;
+            }
+            if ( !EndText && EndComment() )
+            {
+                _index+=2;
+            }
         }
 
         private char Previous => _text[_index - 1];

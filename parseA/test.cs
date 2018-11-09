@@ -42,6 +42,81 @@ namespace ex.parseA
                 Check( "6", o[5] is LParen );
                 Check( "7", o[6] is Function );
             });
+
+            Test( "Should Parse Line Comment", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( @"//func{ {func func( func
+//1, 2, 3, 4, 5
+func" ).ToList();
+                Check( "Result Check", o.Count == 1 );
+                Check( "1", o[0] is Function );
+            });
+
+            Test( "Should Parse Line Comment On Last Line of File", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( @"//func{ {func func( func
+//1, 2, 3, 4, 5
+//func" ).ToList();
+                Check( "Result Check", o.Count == 0 );
+            });
+
+            Test( "Should Parse Only Line Comment", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( @"//" ).ToList();
+                Check( "Result Check", o.Count == 0 );
+            });
+
+            Test( "Should Parse Block Comment", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( @"func
+/* some stuff */
+symbol 
+/* some stuff
+   another stuff
+*/
+symbol2" ).ToList();
+                Check( "Result Check", o.Count == 3 );
+            });
+
+            Test( "Should Parse Entire File Block Comment", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( @"/*func 
+1234
+other func
+*/" ).ToList();
+                Check( "Result Check", o.Count == 0 );
+            });
+
+            Test( "Should Parse Block Comment Until End of File", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( @"func
+/* some stuff */
+symbol 
+/* some stuff
+   another stuff
+symbol2" ).ToList();
+                Check( "Result Check", o.Count == 2 );
+            });
+
+            Test( "Should Parse Only Starting Block Comment", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( @"/*" ).ToList();
+                Check( "Result Check", o.Count == 0 );
+            });
+
+            Test( "Should Parse Only Block Comment", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( @"/**/" ).ToList();
+                Check( "Result Check", o.Count == 0 );
+            });
         }
 
         private static string _name;
