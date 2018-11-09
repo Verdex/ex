@@ -16,7 +16,15 @@ namespace ex.parseA
 
             while( !EndText )
             {
-                if ( Try( '(' ) )
+                if ( Try(char.IsWhiteSpace) ) 
+                {
+                    _index++;
+                }
+                else if ( TryKeyword( "Func" ) )
+                {
+                    yield return new Function();
+                }
+                else if ( Try( '(' ) )
                 {
                     yield return new LParen();
                 }
@@ -60,6 +68,7 @@ namespace ex.parseA
                 {
                     yield return new Comma();
                 }
+                // TODO grab symbols after all keywords
             }
         }
     
@@ -99,6 +108,9 @@ namespace ex.parseA
             }
             return false;
         }
+
+        private bool TryKeyword( string s )
+            => Try( s ) && (EndText || NotSymbolChar( Next ) );
 
         private bool Try( Func<char, bool> p ) 
         {
