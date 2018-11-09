@@ -17,7 +17,6 @@ namespace ex.parseA
 
             while( !EndText )
             {
-                Console.WriteLine( $"Index : {_index}" );
                 if ( Try(char.IsWhiteSpace) ) 
                 {
                     // Nop
@@ -94,7 +93,7 @@ namespace ex.parseA
                 symbol = "";
                 return false;
             }
-            while ( IsSymbolChar( Current ) )
+            while (!EndText && IsSymbolChar( Current ) )
             {
                 s.Add( Current );
                 _index++;
@@ -133,7 +132,6 @@ namespace ex.parseA
         private bool Try( string s )
         {
             var t = _text.Substring( _index );
-            System.Console.WriteLine( t );
             if ( t.StartsWith( s ) )
             {
                 _index += s.Length;
@@ -148,7 +146,7 @@ namespace ex.parseA
 
             bool EndOfFile() => sub.Length == s.Length;
 
-            if ( sub.StartsWith( s ) && ( EndOfFile() || char.IsWhiteSpace( sub[s.Length] ) ) )
+            if ( sub.StartsWith( s ) && ( EndOfFile() || NotSymbolChar( sub[s.Length] ) ) )
             {
                 _index+=s.Length;
                 return true;
