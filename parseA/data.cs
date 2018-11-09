@@ -20,8 +20,8 @@ namespace ex.parseA
     public class RBracket : Token { }
     public class LAngle : Token { }
     public class RAngle : Token { }
-    public class LArrow : Token { }
-    public class RArrow : Token { }
+    public class LBigArrow : Token { }
+    public class RBigArrow : Token { }
 
     public class MetaInfo
     {

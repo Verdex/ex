@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 
 namespace ex.parseA
@@ -12,17 +13,71 @@ namespace ex.parseA
         {
             _index = 0;
             _text = input;
-            return null;
+
+            while( !EndText )
+            {
+                if ( Try( '(' ) )
+                {
+                    yield return new LParen();
+                }
+                else if ( Try( ')' ) )
+                {
+                    yield return new RParen();
+                }
+                else if ( Try( '{' ) )
+                {
+                    yield return new LBracket();
+                }
+                else if ( Try( '}' ) )
+                {
+                    yield return new RBracket();
+                }
+                else if ( Try( "<=" ) )
+                {
+                    yield return new LBigArrow();
+                }
+                else if ( Try( "=>" ) )
+                {
+                    yield return new RBigArrow();
+                }
+                else if ( Try( "<" ) )
+                { 
+                    yield return new LAngle();
+                }
+                else if ( Try( ">" ) )
+                {
+                    yield return new RAngle();
+                }
+                else if ( Try( ':' ) )
+                {
+                    yield return new Colon();
+                }
+                else if ( Try( ';' ) )
+                {
+                    yield return new SemiColon();
+                }
+                else if ( Try( ',' ) )
+                {
+                    yield return new Comma();
+                }
+            }
         }
     
-         
-
         private char Previous => _text[_index - 1];
         private char Next => _text[_index + 1];
-        private char Curent => _text[_index];
+        private char Current => _text[_index];
         private bool HasPrevious => _index - 1 >= 0;
         private bool HasNext => _index + 1 < _text.Length;
         private bool EndText => _text.Length <= _index; 
+        
+        private static bool NotSymbolChar( char c )
+            => !IsSymbolChar( c );
+
+        private static bool IsStartSymbolChar( char c ) 
+            => char.IsLetter( c ) || c == '_';
+
+        private static bool IsSymbolChar( char c ) 
+            => char.IsLetterOrDigit( c ) || c == '_';
 
         private bool Try( char c )
         {
