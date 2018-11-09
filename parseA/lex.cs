@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace ex.parseA
@@ -20,7 +21,7 @@ namespace ex.parseA
                 {
                     _index++;
                 }
-                else if ( TryKeyword( "Func" ) )
+                else if ( TryKeyword( "func" ) )
                 {
                     yield return new Function();
                 }
@@ -68,10 +69,40 @@ namespace ex.parseA
                 {
                     yield return new Comma();
                 }
-                // TODO grab symbols after all keywords
+                else if ( TrySymbol( out var symbol ) )
+                {
+                    yield return new Symbol { Value = symbol };
+                }
+                else
+                {
+                    throw new Exception( "Unknown Symbol" );
+                }
             }
         }
     
+        private bool TrySymbol(out string symbol)
+        {
+            var s = new List<char>();
+            if ( IsStartSymbolChar( Current ) )
+            {
+                s.Add( Current );
+                _index++;
+            }
+            else
+            {
+                symbol = "";
+                return false;
+            }
+            while ( IsSymbolChar( Current ) )
+            {
+                s.Add( Current );
+                _index++;
+            }
+
+            symbol = new string( s.ToArray() );
+            return true;
+        }
+
         private char Previous => _text[_index - 1];
         private char Next => _text[_index + 1];
         private char Current => _text[_index];
@@ -110,7 +141,18 @@ namespace ex.parseA
         }
 
         private bool TryKeyword( string s )
-            => Try( s ) && (EndText || NotSymbolChar( Next ) );
+        {
+            var sub = _text.Substring( _index );
+
+            bool EndOfFile() => sub.Length == s.Length;
+
+            if ( sub.StartsWith( s ) && ( EndOfFile() || char.IsWhiteSpace( sub[s.Length] ) ) )
+            {
+                _index+=s.Length;
+                return true;
+            }
+            return false;
+        }
 
         private bool Try( Func<char, bool> p ) 
         {
