@@ -17,9 +17,10 @@ namespace ex.parseA
 
             while( !EndText )
             {
+                Console.WriteLine( $"Index : {_index}" );
                 if ( Try(char.IsWhiteSpace) ) 
                 {
-                    _index++;
+                    // Nop
                 }
                 else if ( TryKeyword( "func" ) )
                 {

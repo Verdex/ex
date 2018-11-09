@@ -1,14 +1,22 @@
 
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace ex.parseA
 {
-    public static class Test
+    public static class Tests 
     {
-        
         public static void Main()
         {
-
+            Test( "Should Parse Left Big Arrow after func keyword", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( "func <= " ).ToList();
+                Check( "Result Count", o.Count == 2 );
+                Check( "func lexed", o[0] is Function );
+                Check( "left big arrow lexed", o[1] is LBigArrow );
+            });
         }
 
         private static string _name;
