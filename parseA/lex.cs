@@ -33,6 +33,10 @@ namespace ex.parseA
                 {
                     yield return new Function();
                 }
+                else if ( TryKeyword( "while" ) )
+                {
+                    yield return new While();
+                }
                 else if ( Try( '+' ) )
                 {
                     yield return new Add();
