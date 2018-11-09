@@ -49,7 +49,7 @@ namespace ex.parseA
                 var o = l.Lex( @"//func{ {func func( func
 //1, 2, 3, 4, 5
 func" ).ToList();
-                Check( "Result Check", o.Count == 1 );
+                Check( "Result Count", o.Count == 1 );
                 Check( "1", o[0] is Function );
             });
 
@@ -59,14 +59,14 @@ func" ).ToList();
                 var o = l.Lex( @"//func{ {func func( func
 //1, 2, 3, 4, 5
 //func" ).ToList();
-                Check( "Result Check", o.Count == 0 );
+                Check( "Result Count", o.Count == 0 );
             });
 
             Test( "Should Parse Only Line Comment", () =>
             {
                 var l = new Lexer();
                 var o = l.Lex( @"//" ).ToList();
-                Check( "Result Check", o.Count == 0 );
+                Check( "Result Count", o.Count == 0 );
             });
 
             Test( "Should Parse Block Comment", () =>
@@ -79,7 +79,7 @@ symbol
    another stuff
 */
 symbol2" ).ToList();
-                Check( "Result Check", o.Count == 3 );
+                Check( "Result Count", o.Count == 3 );
             });
 
             Test( "Should Parse Entire File Block Comment", () =>
@@ -89,7 +89,7 @@ symbol2" ).ToList();
 1234
 other func
 */" ).ToList();
-                Check( "Result Check", o.Count == 0 );
+                Check( "Result Count", o.Count == 0 );
             });
 
             Test( "Should Parse Block Comment Until End of File", () =>
@@ -101,21 +101,46 @@ symbol
 /* some stuff
    another stuff
 symbol2" ).ToList();
-                Check( "Result Check", o.Count == 2 );
+                Check( "Result Count", o.Count == 2 );
             });
 
             Test( "Should Parse Only Starting Block Comment", () =>
             {
                 var l = new Lexer();
                 var o = l.Lex( @"/*" ).ToList();
-                Check( "Result Check", o.Count == 0 );
+                Check( "Result Count", o.Count == 0 );
             });
 
             Test( "Should Parse Only Block Comment", () =>
             {
                 var l = new Lexer();
                 var o = l.Lex( @"/**/" ).ToList();
-                Check( "Result Check", o.Count == 0 );
+                Check( "Result Count", o.Count == 0 );
+            });
+
+            Test( "All Operators", () => 
+            {
+                var l = new Lexer();
+                var o = l.Lex( "< > + * - / == = != ! <= => >= =< || | & &&" ).ToList();
+                Check( "Result Count", o.Count == 18 );
+                Check( "Less Than", o[0] is LAngle );
+                Check( "Greater Than", o[1] is RAngle );
+                Check( "Add", o[2] is Add );
+                Check( "Mult", o[3] is Mul );
+                Check( "Sub", o[4] is Sub );
+                Check( "Div", o[5] is Div );
+                Check( "Double Equal", o[6] is DoubleEqual );
+                Check( "Equal", o[7] is Equal );
+                Check( "Not Equal", o[8] is NotEqual );
+                Check( "Bang", o[9] is Bang );
+                Check( "Left Big Arrow", o[10] is LBigArrow );
+                Check( "Right Big Arrow", o[11] is RBigArrow );
+                Check( "Left Reverse Big Arrow", o[12] is LReverseBigArrow );
+                Check( "Right Reverse Big Arrow", o[13] is RReverseBigArrow );
+                Check( "Double Or", o[14] is DoubleOr );
+                Check( "Single Or", o[15] is Or );
+                Check( "Single And", o[16] is And );
+                Check( "Double And", o[17] is DoubleAnd );
             });
         }
 
