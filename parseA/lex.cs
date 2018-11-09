@@ -75,7 +75,7 @@ namespace ex.parseA
                 }
                 else
                 {
-                    throw new Exception( "Unknown Symbol" );
+                    throw new Exception( $"Unknown Symbol {Current}" );
                 }
             }
         }
@@ -132,6 +132,7 @@ namespace ex.parseA
         private bool Try( string s )
         {
             var t = _text.Substring( _index );
+            System.Console.WriteLine( t );
             if ( t.StartsWith( s ) )
             {
                 _index += s.Length;
