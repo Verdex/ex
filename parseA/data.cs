@@ -37,6 +37,12 @@ namespace ex.parseA
     public class LReverseBigArrow : Token { }
     public class RReverseBigArrow : Token { }
 
+    public class While : Token { }
+
+    public class Int : Token
+    {
+        public int Value;
+    }
 
     public class MetaInfo
     {

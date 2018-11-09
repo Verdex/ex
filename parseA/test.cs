@@ -142,6 +142,18 @@ symbol2" ).ToList();
                 Check( "Single And", o[16] is And );
                 Check( "Double And", o[17] is DoubleAnd );
             });
+
+            Test( "Int", () =>
+            {
+                var l = new Lexer();
+                var o = l.Lex( "5 < 1009" ).ToList();
+                Check( "Result Count", o.Count == 3 );
+                Check( "Int 1 type", o[0] is Int );
+                Check( "Int 1 value", ((Int)o[0]).Value == 5 );
+                Check( "Left Angle", o[1] is LAngle );
+                Check( "Int 2 type", o[2] is Int );
+                Check( "Int 2 value", ((Int)o[2]).Value == 1009 );
+            });
         }
 
         private static string _name;

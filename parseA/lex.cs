@@ -137,6 +137,10 @@ namespace ex.parseA
                 {
                     yield return new Symbol { Value = symbol };
                 }
+                else if ( TryInt( out var value ) )
+                {
+                    yield return new Int { Value = value };
+                }
                 else
                 {
                     throw new Exception( $"Unknown Symbol {Current}" );
@@ -164,6 +168,28 @@ namespace ex.parseA
             }
 
             symbol = new string( s.ToArray() );
+            return true;
+        }
+
+        private bool TryInt( out int value )
+        {
+            var d = new List<char>();
+            if ( char.IsDigit( Current ) )
+            {
+                d.Add( Current );
+                _index++;
+            }
+            else
+            {
+                value = 0;
+                return false;
+            }
+            while( !EndText && char.IsDigit( Current ) )
+            {
+                d.Add( Current );
+                _index++; 
+            }
+            value = int.Parse( new string( d.ToArray() ) );
             return true;
         }
         
