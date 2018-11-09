@@ -22,6 +22,21 @@ namespace ex.parseA
     public class RAngle : Token { }
     public class LBigArrow : Token { }
     public class RBigArrow : Token { }
+    public class Add : Token { }
+    public class Sub : Token { } 
+    public class Mul : Token { }
+    public class Div : Token { }
+    public class DoubleAnd : Token { }
+    public class DoubleOr : Token { }
+    public class And : Token { }
+    public class Or : Token { }
+    public class Bang : Token { }
+    public class Equal : Token { }
+    public class DoubleEqual : Token { }
+    public class NotEqual : Token { }
+    public class LReverseBigArrow : Token { }
+    public class RReverseBigArrow : Token { }
+
 
     public class MetaInfo
     {

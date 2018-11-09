@@ -33,6 +33,50 @@ namespace ex.parseA
                 {
                     yield return new Function();
                 }
+                else if ( Try( '+' ) )
+                {
+                    yield return new Add();
+                }
+                else if ( Try( '-' ) )
+                {
+                    yield return new Sub();
+                }
+                else if ( Try( '*' ) )
+                {
+                    yield return new Mul();
+                }
+                else if ( Try( '/' ) )
+                {
+                    yield return new Div();
+                }
+                else if ( Try( "&&" ) )
+                {
+                    yield return new DoubleAnd();
+                }
+                else if ( Try( "||" ) )
+                {
+                    yield return new DoubleOr();
+                }
+                else if ( Try( "==" ) )
+                {
+                    yield return new DoubleEqual();
+                }
+                else if ( Try( "&" ) )
+                {
+                    yield return new And();
+                }
+                else if ( Try( "|" ) )
+                {
+                    yield return new Or();
+                }
+                else if ( Try( "!=" ) )
+                {
+                    yield return new NotEqual();
+                }
+                else if ( Try( "!" ) )
+                {
+                    yield return new Bang();
+                }
                 else if ( Try( '(' ) )
                 {
                     yield return new LParen();
@@ -57,6 +101,14 @@ namespace ex.parseA
                 {
                     yield return new RBigArrow();
                 }
+                else if ( Try( ">=" ) )
+                {
+                    yield return new LReverseBigArrow();
+                }
+                else if ( Try( "=<" ) )
+                {
+                    yield return new RReverseBigArrow();
+                }
                 else if ( Try( "<" ) )
                 { 
                     yield return new LAngle();
@@ -64,6 +116,10 @@ namespace ex.parseA
                 else if ( Try( ">" ) )
                 {
                     yield return new RAngle();
+                }
+                else if ( Try( "=" ) )
+                {
+                    yield return new Equal();
                 }
                 else if ( Try( ':' ) )
                 {
