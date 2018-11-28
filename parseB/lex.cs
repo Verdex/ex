@@ -77,6 +77,14 @@ namespace ex.parseB
                 {
                     yield return new TNotEqual();
                 }
+                else if ( Try( "&" ) )
+                {
+                    yield return new TAnd();
+                }
+                else if ( Try( "|" ) )
+                {
+                    yield return new TOr();
+                }
                 else if ( Try( "!" ) )
                 {
                     yield return new TBang();

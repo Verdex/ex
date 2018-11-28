@@ -27,6 +27,8 @@ namespace ex.parseB
     public class TMul : Token { }
     public class TDiv : Token { }
     public class TDot : Token { }
+    public class TAnd : Token { }
+    public class TOr : Token { }
     public class TDoubleAnd : Token { }
     public class TDoubleOr : Token { }
     public class TBang : Token { }
