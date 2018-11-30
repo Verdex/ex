@@ -8,8 +8,7 @@ namespace ex.parseB
     {
         public void Parse( IEnumerable<Token> tokens )
         {
-            
+                    
         }
-
     }
 }

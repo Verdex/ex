@@ -61,22 +61,6 @@ namespace ex.parseB
                 {
                     yield return new TDiv();
                 }
-                else if ( Try( "&&" ) )
-                {
-                    yield return new TDoubleAnd();
-                }
-                else if ( Try( "||" ) )
-                {
-                    yield return new TDoubleOr();
-                }
-                else if ( Try( "==" ) )
-                {
-                    yield return new TDoubleEqual();
-                }
-                else if ( Try( "!=" ) )
-                {
-                    yield return new TNotEqual();
-                }
                 else if ( Try( "&" ) )
                 {
                     yield return new TAnd();
@@ -97,6 +81,14 @@ namespace ex.parseB
                 {
                     yield return new TRParen();
                 }
+                else if ( Try( '[' ) )
+                {
+                    yield return new TLSquare();
+                }
+                else if ( Try( ']' ) )
+                {
+                    yield return new TRSquare();
+                }
                 else if ( Try( '{' ) )
                 {
                     yield return new TLBracket();
@@ -104,22 +96,6 @@ namespace ex.parseB
                 else if ( Try( '}' ) )
                 {
                     yield return new TRBracket();
-                }
-                else if ( Try( "<=" ) )
-                {
-                    yield return new TLBigArrow();
-                }
-                else if ( Try( "=>" ) )
-                {
-                    yield return new TRBigArrow();
-                }
-                else if ( Try( ">=" ) )
-                {
-                    yield return new TLReverseBigArrow();
-                }
-                else if ( Try( "=<" ) )
-                {
-                    yield return new TRReverseBigArrow();
                 }
                 else if ( Try( "<" ) )
                 { 
@@ -144,6 +120,38 @@ namespace ex.parseB
                 else if ( Try( ',' ) )
                 {
                     yield return new TComma();
+                }
+                else if ( Try( '`' ) ) 
+                {
+                    yield return new TBackTick();
+                }
+                else if ( Try( '$' ) )
+                {
+                    yield return new TDollar();
+                }
+                else if ( Try( '%' ) )
+                {
+                    yield return new TPercent();
+                }
+                else if ( Try( '^' ) )
+                {
+                    yield return new TXor();
+                }
+                else if ( Try( '#' ) )
+                {
+                    yield return new THash();
+                }
+                else if ( Try( '@' ) )
+                {
+                    yield return new TAt();
+                }
+                else if ( Try( '?' ) )
+                {
+                    yield return new TQuestion();
+                }
+                else if ( Try( '~' ) )
+                {
+                    yield return new TTilde();
                 }
                 else if ( TrySymbol( out var symbol ) )
                 {

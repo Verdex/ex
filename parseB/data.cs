@@ -10,18 +10,17 @@ namespace ex.parseB
     {
         public string Value;
     }
-    public class TFunction : Token { }
     public class TComma : Token { }
     public class TColon : Token { }
     public class TSemiColon : Token { }
     public class TLParen : Token { }
     public class TRParen : Token { }
+    public class TLSquare : Token { }
+    public class TRSquare : Token { }
     public class TLBracket : Token { }
     public class TRBracket : Token { }
     public class TLAngle : Token { }
     public class TRAngle : Token { }
-    public class TLBigArrow : Token { }
-    public class TRBigArrow : Token { }
     public class TAdd : Token { }
     public class TSub : Token { } 
     public class TMul : Token { }
@@ -29,17 +28,20 @@ namespace ex.parseB
     public class TDot : Token { }
     public class TAnd : Token { }
     public class TOr : Token { }
-    public class TDoubleAnd : Token { }
-    public class TDoubleOr : Token { }
+    public class TXor : Token { }
     public class TBang : Token { }
     public class TEqual : Token { }
-    public class TDoubleEqual : Token { }
-    public class TNotEqual : Token { }
-    public class TLReverseBigArrow : Token { }
-    public class TRReverseBigArrow : Token { }
+    public class TDollar : Token { }
+    public class TTilde : Token { }
+    public class TBackTick : Token { }
+    public class TPercent : Token { }
+    public class TAt : Token { }
+    public class TQuestion : Token { }
+    public class THash : Token { }
 
     public class TWhile : Token { }
     public class TModule : Token { }
+    public class TFunction : Token { }
 
     public class TInt : Token
     {
