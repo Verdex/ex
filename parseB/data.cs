@@ -57,13 +57,47 @@ namespace ex.parseB
         public MetaInfo Info;
     }
 
-    public AModule : Ast
+    public class AModule : Ast
     {
         public string Name;  
     }
 
-    public AFunction : Ast
+    public class AFunctionDef : Ast
     {
         public string Name;
+    }
+
+    public class ABinaryList : Ast
+    {
+        public Token[] BinOp;
+        public AExpr Next;
+    }
+
+    public class APrimitiveExpr : AExpr 
+    // literals (String, int, bool), variable, function call, lambda def, cons
+    {
+    }
+
+    public AVariable : APrimitiveExpr
+    {
+    }
+
+    public ABoolExpr : APrimitiveExpr
+    {
+    }
+
+    public class AStringExpr : APrimitiveExpr
+    {
+    }
+
+    public class AIntExpr : APrimitiveExpr
+    {
+    }
+
+    public class AExpr : Ast
+    {
+        public bool Negated;
+        public APrimitiveExpr Expr;
+        public ABinaryList BinExpr;
     }
 }
