@@ -2,7 +2,7 @@
 vm.exe : 
 	csc vm/*.cs -t:exe -out:vm.exe
 
-test : parseATest parseBTest
+test : parseBTest
 
 parseATest : parseATests.exe
 	mono parseATests.exe
