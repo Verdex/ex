@@ -16,9 +16,7 @@ namespace ex.parseB
 
         public AExpr ParseExpr()
         {
-            APrimitiveExpr Primitive()
-            {
-            }
+            APrimitiveExpr Primitive() => null;
             var negated = Try<TSub>();
         }
 

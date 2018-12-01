@@ -10,6 +10,26 @@ namespace ex.parseB
         private int _index;
         private string _text;
 
+        private readonly char[] _binOpChar = { '.'
+                                             , '?'
+                                             , '!'
+                                             , '+'
+                                             , '-'
+                                             , '*'
+                                             , '/'
+                                             , '&'
+                                             , '|'
+                                             , '^'
+                                             , '#'
+                                             , '<'
+                                             , '>'
+                                             , '$'
+                                             , '%'
+                                             , '~'
+                                             , '@'
+                                             };
+
+
         public IEnumerable<Token> Lex(string input)
         {
             _index = 0;
@@ -29,143 +49,87 @@ namespace ex.parseB
                 {
                     ClearBlockComment();
                 }
-                else if ( TryKeyword( "func" ) )
-                {
-                    yield return new TFunction();
-                }
-                else if ( TryKeyword( "while" ) )
-                {
-                    yield return new TWhile();
-                }
-                else if ( TryKeyword( "module" ) )
-                {
-                    yield return new TModule();
-                }
-                else if ( Try( '.' ) )
-                {
-                    yield return new TDot();
-                }
-                else if ( Try( '+' ) )
-                {
-                    yield return new TAdd();
-                }
-                else if ( Try( '-' ) )
-                {
-                    yield return new TSub();
-                }
-                else if ( Try( '*' ) )
-                {
-                    yield return new TMul();
-                }
-                else if ( Try( '/' ) )
-                {
-                    yield return new TDiv();
-                }
-                else if ( Try( "&" ) )
-                {
-                    yield return new TAnd();
-                }
-                else if ( Try( "|" ) )
-                {
-                    yield return new TOr();
-                }
-                else if ( Try( "!" ) )
-                {
-                    yield return new TBang();
-                }
                 else if ( Try( '(' ) )
                 {
-                    yield return new TLParen();
+                    yield return new Token { TokenType = TT.LParen };
                 }
                 else if ( Try( ')' ) )
                 {
-                    yield return new TRParen();
+                    yield return new Token { TokenType = TT.RParen };
                 }
                 else if ( Try( '[' ) )
                 {
-                    yield return new TLSquare();
+                    yield return new Token { TokenType = TT.LSquare };
                 }
                 else if ( Try( ']' ) )
                 {
-                    yield return new TRSquare();
+                    yield return new Token { TokenType = TT.RSquare };
                 }
                 else if ( Try( '{' ) )
                 {
-                    yield return new TLBracket();
+                    yield return new Token { TokenType = TT.LCurly };
                 }
                 else if ( Try( '}' ) )
                 {
-                    yield return new TRBracket();
-                }
-                else if ( Try( "<" ) )
-                { 
-                    yield return new TLAngle();
-                }
-                else if ( Try( ">" ) )
-                {
-                    yield return new TRAngle();
+                    yield return new Token { TokenType = TT.RCurly };
                 }
                 else if ( Try( "=" ) )
                 {
-                    yield return new TEqual();
+                    yield return new Token { TokenType = TT.Equal };
                 }
                 else if ( Try( ':' ) )
                 {
-                    yield return new TColon();
+                    yield return new Token { TokenType = TT.Colon };
                 }
                 else if ( Try( ';' ) )
                 {
-                    yield return new TSemiColon();
+                    yield return new Token { TokenType = TT.SemiColon };
                 }
                 else if ( Try( ',' ) )
                 {
-                    yield return new TComma();
-                }
-                else if ( Try( '`' ) ) 
-                {
-                    yield return new TBackTick();
-                }
-                else if ( Try( '$' ) )
-                {
-                    yield return new TDollar();
-                }
-                else if ( Try( '%' ) )
-                {
-                    yield return new TPercent();
-                }
-                else if ( Try( '^' ) )
-                {
-                    yield return new TXor();
-                }
-                else if ( Try( '#' ) )
-                {
-                    yield return new THash();
-                }
-                else if ( Try( '@' ) )
-                {
-                    yield return new TAt();
-                }
-                else if ( Try( '?' ) )
-                {
-                    yield return new TQuestion();
-                }
-                else if ( Try( '~' ) )
-                {
-                    yield return new TTilde();
+                    yield return new Token { TokenType = TT.Comma };
                 }
                 else if ( TrySymbol( out var symbol ) )
                 {
-                    yield return new TSymbol { Value = symbol };
+                    yield return new Token { TokenType = TT.Int, SymbolValue = symbol };
                 }
                 else if ( TryInt( out var value ) )
                 {
-                    yield return new TInt { Value = value };
+                    yield return new Token { TokenType = TT.Int, IntValue = value };
+                }
+                else if ( TryBinOp( out string binOp ) )
+                {
+                    yield return new Token { TokenType = TT.BinOp, BinOpValue = binOp };
                 }
                 else
                 {
                     throw new Exception( $"Unknown Symbol {Current}" );
                 }
             }
+        }
+
+        private bool TryBinOp(out string binOp )
+        {
+            bool IsBinOpChar( char character ) => _binOpChar.Any( c => character == c );
+
+            var bs = new List<char>();
+            if ( IsBinOpChar( Current ) )
+            {
+                bs.Add( Current );
+                _index++;
+            }
+            else
+            {
+                binOp = "";
+                return false;
+            }
+            while( !EndText && IsBindOp( Current ) )
+            {
+                bs.Add( Current );
+                _index++; 
+            }
+            value = new string( bs.ToArray() );
+            return true;
         }
     
         private bool TrySymbol(out string symbol)
