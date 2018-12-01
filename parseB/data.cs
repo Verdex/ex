@@ -31,6 +31,22 @@ namespace ex.parseB
     {
     }
 
+    public class Type
+    {
+    }
+
+    public class IndexedType : Type
+    {
+    }
+
+    public class ArrowType : Type
+    {
+    }
+
+    public class AtomType : Type
+    {
+    }
+
     public class Expr 
     {
     }
@@ -47,6 +63,11 @@ namespace ex.parseB
     public class Int : BaseExpr
     {
         public int Value;
+    }
+
+    public class Lambda : BaseExpr
+    {
+         
     }
 
     public class BinOpCons : Expr

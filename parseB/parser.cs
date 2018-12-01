@@ -19,6 +19,11 @@ namespace ex.parseB
             return Expr();
         }
 
+        private Type Type()
+        {
+            
+        }
+
         private Expr Expr()
         {
             BaseExpr Primary()
@@ -103,5 +108,7 @@ namespace ex.parseB
             }
             return false;
         }
+
+        private bool TryKeyword( string value ) => Current.TokenType == TT.Symbol && Current.SymbolValue == value;
     }
 }
