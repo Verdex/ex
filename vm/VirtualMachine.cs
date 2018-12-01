@@ -6,8 +6,8 @@ namespace ex.vm
 {
     public class VirtualMachine
     {
-        public void Run( List<SInstruction> instructions )
+        /*public void Run( List<SInstruction> instructions )
         {
-        }
+        }*/
     }
 }

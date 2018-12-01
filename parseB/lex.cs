@@ -123,12 +123,12 @@ namespace ex.parseB
                 binOp = "";
                 return false;
             }
-            while( !EndText && IsBindOp( Current ) )
+            while( !EndText && IsBinOpChar( Current ) )
             {
                 bs.Add( Current );
                 _index++; 
             }
-            value = new string( bs.ToArray() );
+            binOp = new string( bs.ToArray() );
             return true;
         }
     

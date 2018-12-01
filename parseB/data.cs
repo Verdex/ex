@@ -5,7 +5,7 @@ namespace ex.parseB
     {
         Comma,
         Colon,
-        SemiColon
+        SemiColon,
         LParen,
         RParen,
         LSquare,
@@ -24,7 +24,7 @@ namespace ex.parseB
         public TT TokenType;
         public string SymbolValue;
         public int IntValue;
-        public char BinOpValue;
+        public string BinOpValue;
     }
 
     public class MetaInfo
