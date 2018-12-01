@@ -30,4 +30,29 @@ namespace ex.parseB
     public class MetaInfo
     {
     }
+
+    public class Expr 
+    {
+    }
+
+    public class BaseExpr : Expr
+    {
+    }
+
+    public class Variable : BaseExpr 
+    {
+        public string Name;
+    }
+
+    public class Int : BaseExpr
+    {
+        public int Value;
+    }
+
+    public class BinOpCons : Expr
+    {
+        public BaseExpr Primary;
+        public string BinOp;
+        public Expr Rest;
+    }
 }

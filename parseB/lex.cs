@@ -91,7 +91,7 @@ namespace ex.parseB
                 }
                 else if ( TrySymbol( out var symbol ) )
                 {
-                    yield return new Token { TokenType = TT.Int, SymbolValue = symbol };
+                    yield return new Token { TokenType = TT.Symbol, SymbolValue = symbol };
                 }
                 else if ( TryInt( out var value ) )
                 {

@@ -11,10 +11,44 @@ namespace ex.parseB
         private List<Token> _tokens;
         private int _index;
 
-        public void Parse( IEnumerable<Token> tokens )
+        public Expr Parse( IEnumerable<Token> tokens )
         {
             _tokens = tokens.ToList();                        
             _index = 0;
+
+            return Expr();
+        }
+
+        private Expr Expr()
+        {
+            BaseExpr Primary()
+            {
+            // TODO handle negated
+            // TODO handle paren
+                if ( TrySymbol( out string value ) )
+                {
+                    return new Variable { Name = value };
+                }
+                else if ( TryInt( out int iValue) )
+                {
+                    return new Int { Value = iValue };
+                }
+                return null;
+            }
+
+            if ( EndTokens )
+            {
+                return null;
+            }
+
+            var primary = Primary();
+
+            if ( EndTokens || !TryBinOp( out string binOp ) )
+            {
+                return primary; 
+            }
+
+            return new BinOpCons { Primary = primary, BinOp = binOp, Rest = Expr() };
         }
 
         private Token Previous => _tokens[_index - 1];
@@ -22,52 +56,52 @@ namespace ex.parseB
         private Token Current => _tokens[_index];
         private bool HasPrevious => _index - 1 >= 0;
         private bool HasNext => _index + 1 < _tokens.Count;
-        private bool EndText => _tokens.Count <= _index; 
+        private bool EndTokens => _tokens.Count <= _index; 
 
-        private bool Try(TT tokenType,
-                         string symbolValue = null, 
-                         string binOpValue = null, 
-                         int? intValue = null)
+        private bool TryInt( out int value )
         {
-            bool MatchSymbolValue() => symbolValue == null || symbolValue == Current.SymbolValue;
-            bool MatchBinOpValue() => binOpValue == null || binOpValue == Current.BinOpValue;
-            bool MatchIntValue() => intValue == null || intValue == Current.IntValue;
+            if ( Current.TokenType == TT.Int )
+            {
+                value = Current.IntValue;
+                _index++;
+                return true;
+            }
+            value = 0;
+            return false;
+        }
 
-            if ( Current.TokenType == tokenType 
-                && MatchSymbolValue() 
-                && MatchBinOpValue() 
-                && MatchIntValue() )
+        private bool TrySymbol( out string value )
+        {
+            if ( Current.TokenType == TT.Symbol )
+            {
+                value = Current.SymbolValue;
+                _index++;
+                return true;
+            }
+            value = "";
+            return false;
+        }
+
+        private bool TryBinOp( out string binOp )
+        {
+            if ( Current.TokenType == TT.BinOp )
+            {
+                binOp = Current.BinOpValue;
+                _index++;
+                return true;
+            }
+            binOp = "";
+            return false;
+        }
+
+        private bool TryToken( TT tokenType )
+        {
+            if ( Current.TokenType == tokenType )
             {
                 _index++;
                 return true;
             }
             return false;
-        }
-
-        private void Is(TT tokenType, 
-                        string symbolValue = null, 
-                        string binOpValue = null, 
-                        int? intValue = null)
-        {
-            if ( symbolValue != null && Current.SymbolValue != symbolValue )
-            {
-                throw new Exception ( "failure" );
-            }
-
-            if ( binOpValue != null && Current.BinOpValue != binOpValue )
-            {
-                throw new Exception ( "failure" );
-            }
-
-            if ( intValue != null && Current.IntValue != intValue )
-            {
-                throw new Exception ( "failure" );
-            }
-
-            if ( Current.TokenType != tokenType )
-            {
-                throw new Exception ( "failure" );
-            }
         }
     }
 }
