@@ -35,16 +35,26 @@ namespace ex.parseB
     {
     }
 
-    public class IndexedType : Type
+    public class BaseType : Type
     {
     }
 
-    public class ArrowType : Type
+    public class SimpleType : BaseType
     {
+        public string Name;
     }
 
-    public class AtomType : Type
+    public class IndexType : BaseType
     {
+        public string Name;
+        public Type Index;
+    }
+
+    public class TypeBinOpCons : Type
+    {
+        public BaseType Primary;
+        public string BinOp;
+        public Type Rest;
     }
 
     public class Expr 
