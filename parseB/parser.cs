@@ -19,6 +19,14 @@ namespace ex.parseB
             return Expr();
         }
 
+        public Type ParseType( IEnumerable<Token> tokens )// todo remove this function
+        {
+            _tokens = tokens.ToList();                        
+            _index = 0;
+
+            return Type();
+        }
+
         private Type Type()
         {
             BaseType Primary()
@@ -96,7 +104,7 @@ namespace ex.parseB
 
         private bool TryInt( out int value )
         {
-            if ( Current.TokenType == TT.Int )
+            if ( !EndTokens && Current.TokenType == TT.Int )
             {
                 value = Current.IntValue;
                 _index++;
@@ -108,7 +116,7 @@ namespace ex.parseB
 
         private bool TrySymbol( out string value )
         {
-            if ( Current.TokenType == TT.Symbol )
+            if ( !EndTokens && Current.TokenType == TT.Symbol )
             {
                 value = Current.SymbolValue;
                 _index++;
@@ -120,7 +128,7 @@ namespace ex.parseB
 
         private bool TryBinOp( out string binOp )
         {
-            if ( Current.TokenType == TT.BinOp )
+            if ( !EndTokens && Current.TokenType == TT.BinOp )
             {
                 binOp = Current.BinOpValue;
                 _index++;
@@ -132,7 +140,7 @@ namespace ex.parseB
 
         private bool TryToken( TT tokenType )
         {
-            if ( Current.TokenType == tokenType )
+            if ( !EndTokens && Current.TokenType == tokenType )
             {
                 _index++;
                 return true;
@@ -142,11 +150,12 @@ namespace ex.parseB
 
         private void IsToken( TT tokenType )
         {
-            if ( Current.TokenType == tokenType )
+            if ( !EndTokens && Current.TokenType == tokenType )
             {
                 _index++;
+                return;
             }
-            throw new Exception( "Encountered unexpected token" );
+            throw new Exception( $"Encountered unexpected token {Current.TokenType}, but expected {tokenType}" );
         }
 
         private bool TryKeyword( string value ) => Current.TokenType == TT.Symbol && Current.SymbolValue == value;

@@ -22,6 +22,29 @@ namespace ex.parseB
                 return "UNKNOWN";
             }
 
+            string DisplayType( Type c )
+            {
+                if ( c == null )
+                    return "";
+                if ( c is SimpleType s )
+                    return s.Name.ToString();
+                if ( c is IndexType i )
+                    return $"{i.Name}[ {DisplayType(i.Index)} ]";
+                if ( c is TypeBinOpCons bin )
+                    return $"{DisplayType( bin.Primary )} {bin.BinOp} {DisplayType( bin.Rest )}";
+                return "UNKNOWN";
+            }
+
+            Test( "int", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "5" );
+                var parser = new Parser();
+                var expr = parser.Parse( ts );
+                Check( "int", expr is Int );
+                Check( "value", ((Int)expr).Value == 5 );
+            });
+
             Test( "var", () =>
             {
                 var lex = new Lexer(); 
@@ -66,7 +89,66 @@ namespace ex.parseB
                 var expr = parser.Parse( ts );
                 Console.WriteLine( Display( expr ) );
                 Check( "result", Display( expr ) == "5*|>4+6" );
+            });
 
+            Test( "Type simple", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "int" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine( DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "int" );
+            });
+
+            Test( "Type index", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "int[a]" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine( DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "int[ a ]" );
+            });
+
+            Test( "Type index index", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "int[a [ blarg ]]" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine( DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "int[ a[ blarg ] ]" );
+            });
+
+            Test( "simple Type Arrow", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "int -> int" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine( DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "int -> int" );
+            });
+
+            Test( "simple product type", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "int * int" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine( DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "int * int" );
+            });
+
+            Test( "complex type", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "int[a * b -> c[j]] * int -> b[t * g]" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine( DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "int[ a * b -> c[ j ] ] * int -> b[ t * g ]" );
             });
         }
 
