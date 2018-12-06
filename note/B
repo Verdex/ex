@@ -1,0 +1,16 @@
+local function
+env, sig, env passing, env blocks
+data comprehensions
+most bin ops come from env
+    bin ops need presidence and associativity as part of type
+struct
+union
+generics, constraint
+linq functions
+pattern match
+lambda
+panic
+lglobals
+extension methods
+mut and immut
+
