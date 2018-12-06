@@ -57,6 +57,17 @@ namespace ex.parseB
                 Check( "result", Display( expr ) == "5*4+6" );
 
             });
+
+            Test( "bin", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "5 *|> 4 + 6" );
+                var parser = new Parser();
+                var expr = parser.Parse( ts );
+                Console.WriteLine( Display( expr ) );
+                Check( "result", Display( expr ) == "5*|>4+6" );
+
+            });
         }
 
         private static string _name;

@@ -21,14 +21,45 @@ namespace ex.parseB
 
         private Type Type()
         {
-            
+            BaseType Primary()
+            {
+            // TODO handle paren
+                if ( TrySymbol( out string value ) )
+                {
+                    if ( TryToken( TT.LSquare ) )
+                    {
+                        var i = Type();
+                        IsToken( TT.RSquare );
+                        return new IndexType { Name = value, Index = i };
+                    }
+                    else
+                    {
+                        return new SimpleType { Name = value };
+                    }
+                }
+                return null;
+            }
+
+            if ( EndTokens )
+            {
+                return null;
+            }
+
+            var primary = Primary();
+
+            if ( EndTokens || !TryBinOp( out string binOp ) )
+            {
+                return primary; 
+            }
+
+            return new TypeBinOpCons { Primary = primary, BinOp = binOp, Rest = Type() };
         }
 
         private Expr Expr()
         {
             BaseExpr Primary()
             {
-            // TODO handle negated
+            // TODO handle negated (might just have a .negate method and then put the '-' in the lexer)
             // TODO handle paren
                 if ( TrySymbol( out string value ) )
                 {
@@ -107,6 +138,15 @@ namespace ex.parseB
                 return true;
             }
             return false;
+        }
+
+        private void IsToken( TT tokenType )
+        {
+            if ( Current.TokenType == tokenType )
+            {
+                _index++;
+            }
+            throw new Exception( "Encountered unexpected token" );
         }
 
         private bool TryKeyword( string value ) => Current.TokenType == TT.Symbol && Current.SymbolValue == value;
