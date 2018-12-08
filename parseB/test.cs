@@ -19,6 +19,8 @@ namespace ex.parseB
                     return v.Name;
                 if ( c is BinOpCons bin )
                     return Display( bin.Primary ) + bin.BinOp + Display( bin.Rest );
+                if ( c is ParenExpr pe )
+                    return $"( {Display( pe.Expr )} )";
                 return "UNKNOWN";
             }
 
@@ -91,6 +93,16 @@ namespace ex.parseB
                 var expr = parser.Parse( ts );
                 Console.WriteLine( Display( expr ) );
                 Check( "result", Display( expr ) == "5*|>4+6" );
+            });
+
+            Test( "bin", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "((5) *|> (4 + 6) )" );
+                var parser = new Parser();
+                var expr = parser.Parse( ts );
+                Console.WriteLine( Display( expr ) );
+                Check( "result", Display( expr ) == "( ( 5 )*|>( 4+6 ) )" );
             });
 
             Test( "Type simple", () =>

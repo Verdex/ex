@@ -72,9 +72,13 @@ namespace ex.parseB
         {
             BaseExpr Primary()
             {
-            // TODO handle negated (might just have a .negate method and then put the '-' in the lexer)
-            // TODO handle paren
-                if ( TrySymbol( out string value ) )
+                if ( TryToken( TT.LParen ) )
+                {
+                    var e = Expr();
+                    IsToken( TT.RParen );
+                    return new ParenExpr { Expr = e };
+                }
+                else if ( TrySymbol( out string value ) )
                 {
                     return new Variable { Name = value };
                 }

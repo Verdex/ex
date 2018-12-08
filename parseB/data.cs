@@ -70,6 +70,11 @@ namespace ex.parseB
     {
     }
 
+    public class ParenExpr : BaseExpr
+    {
+        public Expr Expr;
+    }
+
     public class Variable : BaseExpr 
     {
         public string Name;
