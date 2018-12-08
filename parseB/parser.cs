@@ -31,8 +31,13 @@ namespace ex.parseB
         {
             BaseType Primary()
             {
-            // TODO handle paren
-                if ( TrySymbol( out string value ) )
+                if ( TryToken( TT.LParen ) )
+                {
+                    var t = Type();
+                    IsToken( TT.RParen );
+                    return new ParenType { Type = t };
+                }
+                else if ( TrySymbol( out string value ) )
                 {
                     if ( TryToken( TT.LSquare ) )
                     {
@@ -52,7 +57,7 @@ namespace ex.parseB
             {
                 return null;
             }
-
+            
             var primary = Primary();
 
             if ( EndTokens || !TryBinOp( out string binOp ) )

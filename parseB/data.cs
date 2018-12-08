@@ -50,6 +50,11 @@ namespace ex.parseB
         public Type Index;
     }
 
+    public class ParenType : BaseType
+    {
+        public Type Type;
+    }
+
     public class TypeBinOpCons : Type
     {
         public BaseType Primary;

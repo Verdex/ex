@@ -32,6 +32,8 @@ namespace ex.parseB
                     return $"{i.Name}[ {DisplayType(i.Index)} ]";
                 if ( c is TypeBinOpCons bin )
                     return $"{DisplayType( bin.Primary )} {bin.BinOp} {DisplayType( bin.Rest )}";
+                if ( c is ParenType pt )
+                    return $"( {DisplayType( pt.Type )} )";
                 return "UNKNOWN";
             }
 
@@ -139,6 +141,46 @@ namespace ex.parseB
                 var type = parser.ParseType( ts );
                 Console.WriteLine( DisplayType( type ) );
                 Check( "result", DisplayType( type ) == "int * int" );
+            });
+
+            Test( "ParenType 1", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "(a)" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine("!!" + DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "( a )" );
+            });
+
+            Test( "ParenType 2", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "(a -> b)" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine("!!" + DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "( a -> b )" );
+            });
+
+            Test( "ParenType 3", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "(a -> b) -> c" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine("!!" + DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "( a -> b ) -> c" );
+            });
+
+            Test( "ParenType 4", () =>
+            {
+                var lex = new Lexer(); 
+                var ts = lex.Lex( "(a -> b) -> c[ (a * (b -> c))] -> d" );
+                var parser = new Parser();
+                var type = parser.ParseType( ts );
+                Console.WriteLine("!!" + DisplayType( type ) );
+                Check( "result", DisplayType( type ) == "( a -> b ) -> c[ ( a * ( b -> c ) ) ] -> d" );
             });
 
             Test( "complex type", () =>
