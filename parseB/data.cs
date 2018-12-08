@@ -31,6 +31,14 @@ namespace ex.parseB
     {
     }
 
+    public class Statement
+    {
+    }
+
+    public class FunctionDefine
+    {
+    }
+
     public class Type
     {
     }
