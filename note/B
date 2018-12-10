@@ -1,9 +1,16 @@
 local function
+    local bin op
+    local extension method
 lambda
 function
 module, module block
+    be able to handle unknown types not exported
+    as existential types
+
+    export trait, union, struct, func, var, type, extension method, bin op
 bin op def
     going to need precidence and associativity as part of type
+extention methods
 struct, union
 trait
 generics
@@ -12,4 +19,3 @@ union match with when for field values
 panic
 mut and immut
 
-lglobal?
