@@ -19,3 +19,11 @@ union match with when for field values
 panic
 mut and immut
 
+pub func Symbol[TType]( var v : TType, val d : int ) -> char 
+{
+}
+
+pub func Symbol() -> type
+{
+}
+
