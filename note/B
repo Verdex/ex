@@ -10,14 +10,14 @@ module, module block
     export trait, union, struct, func, var, type, extension method, bin op
 bin op def
     going to need precidence and associativity as part of type
-extention methods
+extension methods
 struct, union
 trait
 generics
 linq functions
 union match with when for field values
 panic
-mut and immut
+mut and immut (val and var)
 
 pub func Symbol[TType]( var v : TType, val d : int ) -> char 
 {
@@ -26,4 +26,87 @@ pub func Symbol[TType]( var v : TType, val d : int ) -> char
 pub func Symbol() -> type
 {
 }
+
+func ( var x, val y, val z ) => x
+
+func ( var x ) { return x; }
+
+func ( val x : Type ) => x
+
+func [TType, TOther] ( val x : TType, val y : TOther ) -> int => 5
+
+while boolean 
+{
+
+    break;
+}
+
+foreach var v in expr
+{
+}
+
+pub func OtherName( ext val target : int ) -> int
+{
+    return x;
+}
+
+pub func Name() -> ()
+{
+    func localName[TType]( x : TType ) -> TType
+    {
+        return x;
+    }
+
+    func OtherName( ext val target : int ) -> int
+    {
+        return x;
+    }
+
+    bin(0, right) ++[T]( val a : List[T], val b : List[T] ) -> List[T]
+    {
+        
+    }
+}
+
+pub bin(10,left) *(var a : int, var b : int ) -> int
+{
+    return a.Mult( b );
+}
+
+module X
+
+
+use X;
+
+use X
+{
+
+}
+
+struct X
+{
+    y : int;
+    z : char;
+}
+struct X[T]
+{
+    y : T;
+}
+
+union X[T]
+{
+    x : T;
+    y : int;
+}
+
+match x 
+{
+    x => x.xField;
+    y => y.yField;
+}
+
+trait Blah[T]
+{
+}
+
 
