@@ -1,16 +1,96 @@
-local function
-env, sig, env passing, env blocks
-data comprehensions
-most bin ops come from env
-    bin ops need presidence and associativity as part of type
-struct
-union
-generics, constraint
-linq functions
-pattern match
+object
+runtime typed object
+function
 lambda
-panic
-lglobals
-extension methods
-mut and immut
+local function
+bin op function
+extension function
+module
+module block
+while
+foreach
+if
+let
+match
+test
 
+if boolean {
+}
+elseif boolean {
+}
+else {
+}
+
+while boolean {
+    continue;
+    break;
+}
+
+foreach let x in y  {
+    continue;
+    break;
+}
+
+let x = y;
+
+match x {
+    Blah { y, z, w = 2 } => ... ,
+    5 => ...,
+    "blah" => ...,
+    true => ...,
+    { y, z, w = 1 } => ..., 
+    _ => ...,
+}
+
+let z = { a = expr
+        , b = expr
+        }
+
+let z = Blarg { a = expr
+              , b = expr
+              }
+
+fun x( y, z, w ) {
+}
+
+fun x( y, z, w ) => expr;
+
+fun (x, y, z) {
+}
+
+fun (x, y, z) => expr
+
+bin *(a, b) [r,0] => expr;
+
+bin *(a, b) [l,10] {
+}
+
+una !(a) [0] => a.Neg();
+una !(b) [10] {
+}
+
+ext blah( x, y, z ) => expr;
+
+ext blah( x, y, z ) {
+}
+
+type Blah;
+
+mod X.Y.Z {
+    type Blah;
+    fun blah( x, y, z ) => Blah { x, y, z };
+    pub type Ikky;
+    pub let z = { y = 4 };
+}
+
+use X.Y.Z;
+
+use X.Y.Z {
+
+}
+
+//post fix
+//list syntax
+//dict syntax?
+//iterator?
+//slice?
