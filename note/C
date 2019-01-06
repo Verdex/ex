@@ -69,6 +69,10 @@ una !(a) [0] => a.Neg();
 una !(b) [10] {
 }
 
+post !(a) [0] => expr;
+post !(b) [10] {
+}
+
 ext blah( x, y, z ) => expr;
 
 ext blah( x, y, z ) {
@@ -89,8 +93,15 @@ use X.Y.Z {
 
 }
 
-//post fix
-//list syntax
-//dict syntax?
-//iterator?
-//slice?
+test Blah {
+
+}
+
+let x = [ 1, 2, 3 ];
+
+let x = [ x = y, y = z ];
+
+
+// iterator
+runtime object Iterator with next function 
+of type self -> IteratorResult { value : any , done : bool }
