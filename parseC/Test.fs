@@ -10,6 +10,10 @@ module Test =
         printfn "%A" (lex "/* blah */")
         printfn "%A" (lex """
         1209 
+        symbol
+        other
+        **
+        <=>
         /* blah 
             blah
             blah

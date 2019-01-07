@@ -10,22 +10,24 @@ module Lex =
 
 
     let _binOpChar = [| '.'
-                      , '?'
-                      , '!'
-                      , '+'
-                      , '-'
-                      , '*'
-                      , '/'
-                      , '&'
-                      , '|'
-                      , '^'
-                      , '#'
-                      , '<'
-                      , '>'
-                      , '$'
-                      , '%'
-                      , '~'
-                      , '@'
+                      ; '?'
+                      ; '!'
+                      ; '+'
+                      ; '-'
+                      ; '*'
+                      ; '/'
+                      ; '&'
+                      ; '|'
+                      ; '^'
+                      ; '#'
+                      ; '<'
+                      ; '>'
+                      ; '$'
+                      ; '%'
+                      ; '~'
+                      ; '@'
+                      ; '='
+                      ; ':'
                       |]
 
     let previous = fun () -> _text.[_index - 1]
@@ -75,10 +77,41 @@ module Lex =
         if not (endText ()) && (endComment ()) then
             _index <- _index + 2
     
-    let isDigit (c : char) = 
-        match c with
-        | '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' -> true
-        | _ -> false
+    let isDigit (c : char) = System.Char.IsDigit( c )
+    let isSymbolChar (c : char) = System.Char.IsLetterOrDigit( c ) || c = '_'
+    let isStartSymbolChar (c: char) = System.Char.IsLetter( c ) || c = '_'
+
+    let tryBinOp = fun () ->
+        let isBinOpChar (character : char) = Array.exists (fun c -> c = character) _binOpChar
+
+        let mutable bs = "" 
+        let add (b:char) = bs <- bs + (string b)
+
+        if isBinOpChar( current () ) then 
+            add( current () )
+            _index <- _index + 1
+            while not (endText ()) && isBinOpChar( current () ) do
+                add( current () )
+                _index <- _index + 1
+            _buffer <- bs
+            true
+        else
+            false
+
+    let trySymbol = fun () ->
+        let mutable ls = ""
+        let add (l:char) = ls <- ls + (string l)
+
+        if isStartSymbolChar( current () ) then 
+            add( current() )
+            _index <- _index + 1;
+            while not (endText ()) && isSymbolChar( current () ) do
+                add( current () )
+                _index <- _index + 1
+            _buffer <- ls
+            true
+        else
+            false
 
     let tryInt = fun () ->
         let mutable ds = "" 
@@ -124,8 +157,14 @@ module Lex =
                 add Comma 
             elif tryChar ';' then
                 add SemiColon 
+            elif trySymbol () then
+                add (Symbol _buffer)
+                _buffer <- ""
             elif tryInt () then
                 add (Int (int _buffer))
+                _buffer <- ""
+            elif tryBinOp () then
+                add (BinOp _buffer)
                 _buffer <- ""
             else  
                 raise (Fatal "error")
