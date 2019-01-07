@@ -20,7 +20,7 @@ parseBTests.exe :
 	csc parseB/data.cs parseB/lex.cs parseB/parser.cs parseB/test.cs -t:exe -out:parseBTests.exe
 
 parseCTests.exe :
-	fsharpc parseC/Data.fs parseC/Util.fs parseC/Lex.fs parseC/Test.fs --out:parseCTests.exe
+	fsharpc parseC/Data.fs parseC/Util.fs parseC/Lex.fs parseC/Parser.fs parseC/Test.fs --out:parseCTests.exe
 
 clean : 
 	rm -rf *.exe

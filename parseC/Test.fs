@@ -4,6 +4,7 @@ module Test =
 
     open Data
     open Lex
+    open Parser
 
     let main = 
         printfn "%A" (lex "// blah ")
