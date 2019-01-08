@@ -130,6 +130,7 @@ module Lex =
     let public lex (input : string) =
         _text <- input
         _index <- 0
+        _buffer <- ""
 
         let mutable tokens = []
         let add (t:Token) = tokens <- List.Cons( t, tokens )

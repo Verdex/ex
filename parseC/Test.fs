@@ -12,6 +12,7 @@ module Test =
         printfn "%A" (lex """
         1209 
         symbol
+        // blah
         other
         **
         <=>
