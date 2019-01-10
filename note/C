@@ -101,6 +101,13 @@ let x = [ 1, 2, 3 ];
 
 let x = [ x = y, y = z ];
 
+lex X = { x : predicate };
+lex X = Blarg { x : predicate, y: predicate };
+
+grammar Z {
+    X,Y,Z => X,Y,f( Z );
+    X => Y ;
+}
 
 // iterator
 runtime object Iterator with next function 
